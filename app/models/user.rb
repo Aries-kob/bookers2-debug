@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   #（フォローされる側から）中間テーブルを通してフォローしてくる側を取得する
   has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  has_many :folloing_user, through: :follower, source: :followed#自分がフォローしてる人
+  has_many :following_user, through: :follower, source: :followed#自分がフォローしてる人
   has_many :follower_user, through: :followed, source: :follower#自分をフォローしている人
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
@@ -38,6 +38,6 @@ class User < ApplicationRecord
   end
   #フォローしていればtrueを返す
   def following?(user)
-    followeing_user.include?(user)
+    following_user.include?(user)
   end
 end
